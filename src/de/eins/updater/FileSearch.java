@@ -9,6 +9,7 @@ public class FileSearch {
 		if (list != null) {
 			for (File file : list) {
 				if (file.getName() != null && file.getName().endsWith(".jar")) {
+					System.out.println("found file: " + file.getName());
 					return file;
 				}
 			}
