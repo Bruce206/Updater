@@ -10,8 +10,6 @@ public class Start {
 
 	public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
 
-		Thread.sleep(3000);
-
 		// PrintStream out = new PrintStream(new FileOutputStream("log.txt"));
 		// System.setOut(out);
 		// System.setErr(out);
@@ -25,7 +23,16 @@ public class Start {
 
 		File newJar = FileSearch.findNewJar(dir);
 
-		Files.move(newJar.toPath(), jarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		boolean finished = false;
+		int i = 0;
+		while (finished == false && i < 10) {
+			try {
+				Files.move(newJar.toPath(), jarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				i++;
+			}
+			finished = true;
+		}
 
 		ProcessBuilder pb = new ProcessBuilder("java", "-jar", jarPath);
 		pb.start();
